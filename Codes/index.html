@@ -143,10 +143,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 5%;
+            padding: 1.5rem 5%;
             position: relative;
             z-index: 10;
-            background: rgba(10, 0, 18, 0.9);
+            background: rgba(10, 0, 18, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 2px solid #ff006e;
             position: sticky;
@@ -155,7 +155,7 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
             font-weight: 700;
             background: linear-gradient(135deg, #ff006e, #00d9ff);
             -webkit-background-clip: text;
@@ -165,10 +165,42 @@
             letter-spacing: 3px;
         }
 
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            gap: 6px;
+            padding: 0.5rem;
+            z-index: 11;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #00d9ff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(10px, 10px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
         nav ul {
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
         }
 
         nav a {
@@ -177,9 +209,10 @@
             transition: all 0.3s ease;
             font-weight: 500;
             text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
             letter-spacing: 1px;
             position: relative;
+            padding: 0.5rem 0;
         }
 
         nav a::before {
@@ -207,8 +240,8 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             align-items: center;
-            gap: 4rem;
-            padding: 6rem 5%;
+            gap: clamp(2rem, 4vw, 4rem);
+            padding: clamp(3rem, 6vw, 6rem) 5%;
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
@@ -216,7 +249,7 @@
         }
 
         .hero-content h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-size: clamp(1.8rem, 6vw, 4rem);
             line-height: 1.2;
             margin-bottom: 1rem;
             background: linear-gradient(135deg, #ff006e, #b100ff);
@@ -230,13 +263,13 @@
         }
 
         .hero-content .subtitle {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
             color: #00d9ff;
             margin-bottom: 1.5rem;
             font-weight: 600;
             text-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             position: relative;
             padding-left: 20px;
         }
@@ -255,7 +288,7 @@
         }
 
         .hero-content p {
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
             color: #00ff88;
             margin-bottom: 2rem;
             max-width: 500px;
@@ -272,9 +305,9 @@
         }
 
         .btn {
-            padding: 0.875rem 1.75rem;
+            padding: clamp(0.7rem, 3vw, 0.875rem) clamp(1.2rem, 4vw, 1.75rem);
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: clamp(0.8rem, 2vw, 1rem);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -286,6 +319,11 @@
             font-family: 'Courier New', monospace;
             position: relative;
             overflow: hidden;
+            min-height: 44px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn::before {
@@ -459,12 +497,12 @@
         }
 
         .section-title {
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
             margin-bottom: 3rem;
             text-align: center;
             color: #ff006e;
             text-transform: uppercase;
-            letter-spacing: 5px;
+            letter-spacing: clamp(2px, 3vw, 5px);
             font-family: 'Courier New', monospace;
             text-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
             position: relative;
@@ -472,6 +510,7 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .section-title::before {
@@ -1026,36 +1065,276 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .about-content,
+            .hero {
+                gap: 2rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+
         @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
             nav ul {
-                gap: 1rem;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                gap: 0;
+                background: rgba(10, 0, 18, 0.98);
+                padding: 1rem;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                backdrop-filter: blur(10px);
+                border-bottom: 2px solid #ff006e;
+            }
+
+            nav ul.active {
+                max-height: 300px;
+            }
+
+            nav li {
+                width: 100%;
+                padding: 0.75rem 0;
+                border-bottom: 1px solid rgba(255, 0, 110, 0.1);
+            }
+
+            nav li:last-child {
+                border-bottom: none;
+            }
+
+            nav a {
+                display: block;
+                padding: 0.75rem 1rem;
             }
 
             .hero {
                 grid-template-columns: 1fr;
-                padding: 3rem 5%;
+                padding: clamp(2rem, 4vw, 3rem) 5%;
+                gap: 2rem;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .avatar-circle {
+                width: clamp(150px, 50vw, 200px);
+                height: clamp(150px, 50vw, 200px);
+            }
+
+            .avatar-circle::before {
+                font-size: clamp(1.8rem, 8vw, 2.5rem);
             }
 
             .about-content {
                 grid-template-columns: 1fr;
             }
 
-            .skills-grid,
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .stat-number {
+                font-size: clamp(1.8rem, 5vw, 2.5rem);
+            }
+
+            .stat-label {
+                font-size: 0.75rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
             .projects-grid {
                 grid-template-columns: 1fr;
             }
 
+            .skill-card,
+            .project-card {
+                padding: 1.5rem;
+            }
+
+            .skill-title {
+                font-size: 1.1rem;
+            }
+
+            .project-title {
+                font-size: 1.2rem;
+            }
+
             .section-title {
+                font-size: clamp(1.3rem, 4vw, 1.8rem);
+                margin-bottom: 2rem;
+                letter-spacing: 2px;
+            }
+
+            .contact-links {
+                gap: 0.8rem;
+            }
+
+            .contact-link {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.8rem;
+                min-width: 120px;
+            }
+
+            .btn {
+                min-width: 140px;
+                width: 100%;
+            }
+
+            .btn-secondary {
+                display: none;
+            }
+
+            .contact-desc {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem 3%;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+                letter-spacing: 2px;
+            }
+
+            nav a {
+                font-size: 0.8rem;
+                letter-spacing: 0.5px;
+            }
+
+            .hero-content h1 {
+                font-size: 1.6rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .hero-content .subtitle {
+                font-size: 0.8rem;
+                margin-bottom: 1rem;
+                letter-spacing: 1px;
+            }
+
+            .hero-content p {
+                font-size: 0.85rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 0.75rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .about {
+                padding: 3rem 3%;
+            }
+
+            .about-text p {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+                border-radius: 8px;
+            }
+
+            .stat-number {
                 font-size: 1.8rem;
             }
 
-            .avatar-circle {
-                width: 200px;
-                height: 200px;
+            .stat-label {
+                font-size: 0.7rem;
             }
 
-            .avatar-circle::before {
-                font-size: 2.5rem;
+            .skills {
+                padding: 3rem 3%;
+            }
+
+            .skill-card {
+                padding: 1.2rem;
+            }
+
+            .skill-tag {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.7rem;
+            }
+
+            .projects {
+                padding: 3rem 3%;
+            }
+
+            .project-card {
+                padding: 1.2rem;
+            }
+
+            .project-desc {
+                font-size: 0.9rem;
+            }
+
+            .project-tag-item {
+                font-size: 0.65rem;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .contact {
+                padding: 3rem 3%;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                gap: 0.6rem;
+            }
+
+            .contact-link {
+                width: 100%;
+                justify-content: center;
+                padding: 0.65rem 1rem;
+                font-size: 0.75rem;
+                min-width: auto;
+            }
+
+            footer {
+                padding: 1.5rem 3%;
+                font-size: 0.8rem;
+            }
+
+            .shape-1 {
+                width: 200px;
+                height: 200px;
+                top: -50px;
+                left: -50px;
+            }
+
+            .shape-2 {
+                width: 150px;
+                height: 150px;
+                bottom: -30px;
+                right: -30px;
             }
         }
 
@@ -1088,7 +1367,12 @@
     <!-- Navigation -->
     <nav>
         <div class="logo">JRC</div>
-        <ul>
+        <button class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul id="navMenu">
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
@@ -1261,6 +1545,23 @@
     </footer>
 
     <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
         // Check if profile image exists and load it
         const avatarCircle = document.querySelector('.avatar-circle');
         const profileImage = new Image();
